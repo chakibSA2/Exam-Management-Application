@@ -39,5 +39,7 @@ public class Exam {
         this.teacher = teacher;
     }
 
-    // Getters et Setters
+    public Users getTeacher() {
+        return teacher;
+    }
 }
