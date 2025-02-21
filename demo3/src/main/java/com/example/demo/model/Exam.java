@@ -18,7 +18,7 @@ public class Exam {
     private Users teacher;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
     public Exam() {}

@@ -11,7 +11,7 @@ public class CourseStudents {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
     @ManyToOne

@@ -11,7 +11,7 @@ public class QuizQuestion {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "quiz_id", referencedColumnName = "quiz_id", nullable = false)
     private Quiz quiz;
 
     @ManyToOne
