@@ -41,5 +41,4 @@ public class Question {
 
     public Question() {}
 
-    // Getters and Setters
 }

@@ -21,7 +21,7 @@ public class CourseStudents {
     public CourseStudents() {}
 
     public CourseStudents(Course course, Users student) {
-        if (!student.getRole().equalsIgnoreCase("STUDENT")) {
+        if (!student.getRole().equals(Roles.STUDENT)) {
             throw new IllegalArgumentException("Seuls les étudiants (ETDxxx) peuvent être inscrits à un cours.");
         }
         this.course = course;
@@ -29,13 +29,12 @@ public class CourseStudents {
     }
 
     public void setStudent(Users student) {
-        if (!student.getRole().equalsIgnoreCase("STUDENT")) {
+        if (!student.getRole().equals(Roles.STUDENT)) {
             throw new IllegalArgumentException("Seuls les étudiants (ETDxxx) peuvent être inscrits à un cours.");
         }
         this.student = student;
     }
 
-    // Getters et Setters
 }
 
 

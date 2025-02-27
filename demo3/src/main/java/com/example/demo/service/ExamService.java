@@ -1,13 +1,13 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Exam;
-import com.example.demo.model.Users;
+import com.example.demo.model.Roles;
+
 import com.example.demo.repository.ExamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class ExamService {
@@ -19,7 +19,7 @@ public class ExamService {
     private UserService userService;
 
     public Exam addExam(Exam exam) {
-        if (!userService.isUserRole(exam.getTeacher().getUserId(), "TEACHER")) {
+        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.TEACHER)) {
             throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent créer des examens.");
         }
         return examRepository.save(exam);

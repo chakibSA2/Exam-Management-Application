@@ -24,7 +24,7 @@ public class Exam {
     public Exam() {}
 
     public Exam(String examTitle, Users teacher, Course course) {
-        if (!teacher.getRole().equalsIgnoreCase("TEACHER")) {
+        if (!teacher.getRole().equals(Roles.TEACHER)) {
             throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
         }
         this.examTitle = examTitle;
@@ -33,7 +33,7 @@ public class Exam {
     }
 
     public void setTeacher(Users teacher) {
-        if (!teacher.getRole().equalsIgnoreCase("TEACHER")) {
+        if (!teacher.getRole().equals(Roles.TEACHER)) {
             throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
         }
         this.teacher = teacher;

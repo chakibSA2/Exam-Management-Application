@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.model.Roles;
 import com.example.demo.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -9,8 +10,9 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<Users, String> {
 
-    List<Users> findByRole(String role);
+    List<Users> findByRole(Roles role);
+    List<Users> findAll();
 
     @Query("SELECT u.userId FROM Users u WHERE u.role = :role ORDER BY u.userId DESC LIMIT 1")
-    String findLastUserIdByRole(@Param("role") String role);
+    String findLastUserIdByRole(@Param("role") Roles role);
 }

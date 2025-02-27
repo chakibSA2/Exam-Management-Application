@@ -18,7 +18,8 @@ public class QuizQuestion {
     @JoinColumn(name = "questions_id", referencedColumnName = "id", nullable = false)
     private Question question;
 
-    public QuizQuestion() {}
+    public QuizQuestion() {
+    }
 
     public Long getId() {
         return id;

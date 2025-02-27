@@ -26,15 +26,16 @@ public class Users {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "role", nullable = false) // ADMIN, TEACHER, STUDENT
-    private String role;
+    @Column(name = "role", nullable = false)
+    private Roles role;
 
     @Column(name = "active")
     private Boolean active;
 
-    public Users() {}
+    public Users() {
+    }
 
-    public Users(String username, String firstName, String lastName, String email, String password, String role, Boolean active) {
+    public Users(String username, String firstName, String lastName, String email, String password, Roles role, Boolean active) {
         this.userId = generateUserId(role);
         this.username = username;
         this.firstName = firstName;
@@ -45,16 +46,16 @@ public class Users {
         this.active = active;
     }
 
-    private String generateUserId(String role) {
+    private String generateUserId(Roles role) {
         String prefix;
-        switch (role.toUpperCase()) {
-            case "ADMIN":
+        switch (role) {
+            case ADMIN:
                 prefix = "ADM";
                 break;
-            case "TEACHER":
+            case TEACHER:
                 prefix = "ENS";
                 break;
-            case "STUDENT":
+            case STUDENT:
                 prefix = "ETD";
                 break;
             default:
@@ -112,11 +113,11 @@ public class Users {
         this.password = password;
     }
 
-    public String getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 

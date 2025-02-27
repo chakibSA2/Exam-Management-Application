@@ -19,7 +19,7 @@ public class ExamStudents {
     public ExamStudents() {}
 
     public ExamStudents(Exam exam, Users student) {
-        if (!student.getRole().equalsIgnoreCase("STUDENT")) {
+        if (!student.getRole().equals(Roles.STUDENT)) {
             throw new IllegalArgumentException("Seuls les étudiants (ETDxxx) peuvent être inscrits à un examen.");
         }
         this.exam = exam;
@@ -27,12 +27,11 @@ public class ExamStudents {
     }
 
     public void setStudent(Users student) {
-        if (!student.getRole().equalsIgnoreCase("STUDENT")) {
+        if (!student.getRole().equals(Roles.STUDENT)) {
             throw new IllegalArgumentException("Seuls les étudiants (ETDxxx) peuvent être inscrits à un examen.");
         }
         this.student = student;
     }
 
-    // Getters et Setters
 }
 

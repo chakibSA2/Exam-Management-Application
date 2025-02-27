@@ -1,5 +1,6 @@
 package com.example.demo.controlleur;
 
+import com.example.demo.model.Roles;
 import com.example.demo.model.Users;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/role/{role}")
-    public ResponseEntity<List<Users>> getUsersByRole(@PathVariable String role) {
+    public ResponseEntity<List<Users>> getUsersByRole(@PathVariable Roles role) {
         List<Users> users = userService.getUsersByRole(role);
         return ResponseEntity.ok(users);
     }
