@@ -29,9 +29,25 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Users>> getAllUsers() {
+        List<Users> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
     @GetMapping("/role/{role}")
     public ResponseEntity<List<Users>> getUsersByRole(@PathVariable Roles role) {
         List<Users> users = userService.getUsersByRole(role);
         return ResponseEntity.ok(users);
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUserById(@PathVariable String userId) {
+        boolean isDeleted = userService.deleteUserById(userId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Utilisateur supprimé avec succès.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

@@ -26,6 +26,7 @@ public class Users {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private Roles role;
 
@@ -36,7 +37,6 @@ public class Users {
     }
 
     public Users(String username, String firstName, String lastName, String email, String password, Roles role, Boolean active) {
-        this.userId = generateUserId(role);
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,25 +46,24 @@ public class Users {
         this.active = active;
     }
 
-    private String generateUserId(Roles role) {
-        String prefix;
-        switch (role) {
-            case ADMIN:
-                prefix = "ADM";
-                break;
-            case TEACHER:
-                prefix = "ENS";
-                break;
-            case STUDENT:
-                prefix = "ETD";
-                break;
-            default:
-                throw new IllegalArgumentException("Rôle inconnu : " + role);
+    @PrePersist
+    private void generateUserId() {
+        if (this.userId == null) {
+            this.userId = generateUserId(this.role);
         }
+    }
+
+    private String generateUserId(Roles role) {
+        String prefix = switch (role) {
+            case ADMIN -> "ADM";
+            case TEACHER -> "ENS";
+            case STUDENT -> "ETD";
+            default -> throw new IllegalArgumentException("Rôle inconnu : " + role);
+        };
         String uniquePart = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
         return prefix + uniquePart;
     }
-
+    
     public String getUserId() {
         return userId;
     }
@@ -129,5 +128,3 @@ public class Users {
         this.active = active;
     }
 }
-
-

@@ -19,7 +19,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<Users> FindAll() {
+    public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -34,5 +34,13 @@ public class UserService {
     public boolean isUserRole(String userId, Roles role) {
         Optional<Users> user = userRepository.findById(userId);
         return user.map(value -> value.getRole().equals(role)).orElse(false);
+    }
+
+    public boolean deleteUserById(String userId) {
+        if (userRepository.existsById(userId)) {
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
     }
 }
