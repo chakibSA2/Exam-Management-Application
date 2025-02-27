@@ -63,7 +63,7 @@ public class Users {
         String uniquePart = UUID.randomUUID().toString().substring(0, 4).toUpperCase();
         return prefix + uniquePart;
     }
-    
+
     public String getUserId() {
         return userId;
     }
