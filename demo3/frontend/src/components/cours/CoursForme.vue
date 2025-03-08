@@ -41,45 +41,89 @@ const createCourse = async () => {
 
 <style scoped>
 .form-container {
-  width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 2rem;
   background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
 }
 
 h2 {
+  color: #2d3748;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #f0f4f8;
 }
 
-form label {
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+label {
+  font-weight: 500;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
   display: block;
-  margin-top: 10px;
-  font-weight: bold;
+  font-size: 0.95rem;
 }
 
-form input {
+input {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
-button {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background: #007bff;
+input:focus {
+  border-color: #667eea;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+button[type="submit"] {
+  background-color: #667eea;
   color: white;
+  padding: 0.9rem 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.2s;
+  font-size: 1rem;
+  margin-top: 0.5rem;
 }
 
-button:hover {
-  background: #0056b3;
+button[type="submit"]:hover {
+  background-color: #5a67d8;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 640px) {
+  .form-container {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  input {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 0.9rem;
+  }
 }
 </style>

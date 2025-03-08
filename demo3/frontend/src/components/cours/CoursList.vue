@@ -4,21 +4,24 @@
       <h2>Liste des Cours</h2>
       <router-link to="/create-cours" class="create-button">Créer un Cours</router-link>
     </div>
-    
+
     <table>
       <thead>
-        <tr>
-          <th>Titre</th>
-          <th>Actions</th>
-        </tr>
+      <tr>
+        <th>Titre</th>
+        <th>Actions</th>
+      </tr>
       </thead>
       <tbody>
-        <tr v-for="course in courses" :key="course.id">
-          <td>{{ course.title }}</td>
-          <td>
-            <button @click="deleteCourse(course.id)">Supprimer</button>
-          </td>
-        </tr>
+      <tr v-for="course in courses" :key="course.id">
+        <td data-label="Titre">{{ course.title }}</td>
+        <td data-label="Actions">
+          <div class="button-group">
+            <button class="edit-button" @click="editCourse(course.id)">Modifier</button>
+            <button class="delete-button" @click="deleteCourse(course.id)">Supprimer</button>
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
 
@@ -62,62 +65,176 @@ onMounted(fetchCourses);
 
 <style scoped>
 .list-container {
-  width: 600px;
-  margin: 20px auto;
+  max-width: 800px;
+  margin: 2rem auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: white;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  min-width: 60%;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  padding: 0 10px;
 }
 
 h2 {
+  color: #2c3e50;
   margin: 0;
-}
-
-.create-button {
-  padding: 8px 12px;
-  background: blue;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.create-button:hover {
-  background: darkblue;
+  text-align: center;
+  flex-grow: 1;
 }
 
 table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
-}
-
-th, td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  margin: 0 auto;
+  min-width: 600px;
 }
 
 th {
-  background: #f4f4f4;
-}
-
-button {
-  background: red;
+  background-color: #3f72af;
   color: white;
-  padding: 5px 10px;
-  border: none;
-  cursor: pointer;
-  border-radius: 3px;
+  padding: 14px 15px;
+  text-align: center;
+  font-weight: 500;
 }
 
-button:hover {
-  background: darkred;
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  background-color: white;
+  text-align: center;
+}
+
+tr:hover td {
+  background-color: #f5f9ff;
+}
+
+.create-button {
+  background-color: #2d8a4d;
+  color: white;
+  padding: 10px 25px;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.create-button:hover {
+  background-color: #24773f;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.edit-button {
+  background-color: #3f72af;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #325f8f;
+  transform: translateY(-1px);
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+p {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .list-container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  table {
+    min-width: unset;
+    width: 100%;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .button-group {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .create-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  td {
+    padding-left: 40%;
+  }
+
+  td::before {
+    width: 35%;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .edit-button,
+  .delete-button {
+    width: 100%;
+  }
 }
 </style>
