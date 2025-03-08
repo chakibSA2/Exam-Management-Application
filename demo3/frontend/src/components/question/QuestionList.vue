@@ -98,7 +98,7 @@ table {
 }
 
 th {
-  background-color: #4a548c;
+  background-color: #3498db;
   color: white;
   padding: 14px 15px;
   text-align: center;
