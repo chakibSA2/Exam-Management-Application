@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Exam;
 import com.example.demo.model.Roles;
+import com.example.demo.model.Users;
 import com.example.demo.repository.ExamRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,23 @@ public class ExamService {
     @Autowired
     private UserService userService;
 
+    public Exam addTeacherToExam(String userID, Exam exam) {
+        Optional<Users> user = userService.getUserById(userID);
+        if (user.isPresent()) {
+            if (!user.get().getRole().equals(Roles.TEACHER)) {
+                exam.setTeacher(user.get());
+                return examRepository.save(exam);
+            } else {
+                throw new IllegalArgumentException("L'utilisateur n'a pas le bon rôle pour être attribué a un examen");
+            }
+        } else {
+            throw new IllegalArgumentException("Utilisateur introuvable pour l'ID : " + userID);
+        }
+    }
+
     public Exam addExam(Exam exam) {
-        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.TEACHER)) {
-            throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent créer des examens.");
+        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.ADMIN)) {
+            throw new IllegalArgumentException("Seuls le personnel d'administration peut créer des examens.");
         }
         return examRepository.save(exam);
     }
@@ -36,14 +51,9 @@ public class ExamService {
 
         Exam existingExam = existingExamOpt.get();
 
-        // Vérifier si l'utilisateur est bien un enseignant
+        // Vérifier si l'utilisateur est bien un personnel administratif
         if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.ADMIN)) {
-            throw new IllegalArgumentException("Seuls les personnel d'administration peuvent modifier un examen.");
-        }
-
-        // Vérifier que l'utilisateur est bien un enseignant
-        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.TEACHER)) {
-            throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent modifier des examens.");
+            throw new IllegalArgumentException("Seuls le personnel d'administration peut modifier un examen.");
         }
 
         // Mettre à jour uniquement les champs nécessaires
@@ -69,10 +79,6 @@ public class ExamService {
 
     public Optional<Exam> getExamById(Long examId) {
         return examRepository.findById(examId);
-    }
-
-    public void deleteExam(Long examId) {
-        examRepository.deleteById(examId);
     }
 
     public List<Exam> getExamsByTeacher(String teacherId) {
