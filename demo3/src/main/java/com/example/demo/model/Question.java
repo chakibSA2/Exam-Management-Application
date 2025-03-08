@@ -41,4 +41,11 @@ public class Question {
 
     public Question() {}
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setExam(Exam exam) {
+        this.exam = exam;
+    }
 }
