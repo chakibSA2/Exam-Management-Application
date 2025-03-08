@@ -15,12 +15,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="exam in exams" :key="exam.examId">
+        <tr v-for="exam in exams" :key="exam.id">
           <td>{{ exam.title }}</td>
           <td>{{ exam.teacher.name }}</td> 
           <td>{{ exam.course }}</td>
           <td>
-            <button @click="deleteExam(exam.examId)">Supprimer</button>
+            <button @click="deleteExam(exam.id)">Supprimer</button>
           </td>
         </tr>
       </tbody>

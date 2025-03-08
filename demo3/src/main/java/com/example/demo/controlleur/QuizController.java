@@ -2,6 +2,7 @@ package com.example.demo.controlleur;
 
 import com.example.demo.model.Quiz;
 import com.example.demo.service.QuizService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,8 +28,10 @@ public class QuizController {
     }
 
     @GetMapping("/{quizId}")
-    public ResponseEntity<Optional<Quiz>> getQuizByid(Long quizId) {
-        return ResponseEntity.ok(quizService.getQuizById(quizId));
+    public ResponseEntity<Quiz> getQuizById(@PathVariable Long quizId) {
+        Quiz quiz = quizService.getQuizById(quizId)
+                .orElseThrow(() -> new EntityNotFoundException("Quiz non trouvé"));
+        return ResponseEntity.ok(quiz);
     }
 
     @DeleteMapping("/{quizId}")

@@ -52,7 +52,7 @@ export const useQuizStore = defineStore("quizStore", {
                 });
 
                 if (!response.ok) throw new Error("Échec de la suppression du quiz.");
-                this.quizzes = this.quizzes.filter(quiz => quiz.quizId !== quizId);
+                this.quizzes = this.quizzes.filter(quiz => quiz.id !== quizId);
             } catch (error) {
                 console.error(error);
             }

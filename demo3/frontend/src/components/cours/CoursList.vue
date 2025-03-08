@@ -13,10 +13,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="course in courses" :key="course.courseId">
+        <tr v-for="course in courses" :key="course.id">
           <td>{{ course.title }}</td>
           <td>
-            <button @click="deleteCourse(course.courseId)">Supprimer</button>
+            <button @click="deleteCourse(course.id)">Supprimer</button>
           </td>
         </tr>
       </tbody>

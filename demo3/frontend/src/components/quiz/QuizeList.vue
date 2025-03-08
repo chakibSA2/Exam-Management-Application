@@ -13,11 +13,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="quiz in quizStore.quizzes" :key="quiz.quizId">
+                <tr v-for="quiz in quizStore.quizzes" :key="quiz.id">
                     <td>{{ quiz.title }}</td>
                     <td>
-                        <button @click="quizStore.deleteQuiz(quiz.quizId)">Supprimer</button>
-                        <router-link :to="`/edit-quiz/${quiz.quizId}`" class="edit-button">Modifier</router-link>
+                        <button @click="quizStore.deleteQuiz(quiz.id)">Supprimer</button>
+                        <router-link :to="`/edit-quiz/${quiz.id}`" class="edit-button">Modifier</router-link>
 
                     </td>
                 </tr>

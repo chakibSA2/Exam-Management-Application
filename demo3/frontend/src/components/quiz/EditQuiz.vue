@@ -1,7 +1,7 @@
 <template>
     <div class="form-container">
         <h2>Modifier le Quiz</h2>
-        <form @submit.prevent="quizStore.updateQuiz(quizStore.selectedQuiz.quizId, quizStore.selectedQuiz)">
+        <form @submit.prevent="quizStore.updateQuiz(quizStore.selectedQuiz.id, quizStore.selectedQuiz)">
             <label>Titre du quiz</label>
             <input v-if="quizStore.selectedQuiz" v-model="quizStore.selectedQuiz.title" type="text" required />
             <p v-else>Chargement du quiz...</p>

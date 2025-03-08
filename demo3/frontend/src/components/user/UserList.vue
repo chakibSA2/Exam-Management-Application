@@ -16,13 +16,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.userId">
+        <tr v-for="user in users" :key="user.id">
           <td>{{ user.userId }}</td>
           <td>{{ user.firstName }} {{ user.lastName }}</td>
           <td>{{ user.email }}</td>
           <td>{{ user.role }}</td>
           <td>
-            <button @click="deleteUser(user.userId)">Supprimer</button>
+            <button @click="deleteUser(user.id)">Supprimer</button>
           </td>
         </tr>
       </tbody>
