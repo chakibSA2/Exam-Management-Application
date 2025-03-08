@@ -4,7 +4,7 @@
       <h2>Liste des Utilisateurs</h2>
       <router-link to="/create-user" class="create-button">Créer un Utilisateur</router-link>
     </div>
-    
+
     <table>
       <thead>
         <tr>
@@ -23,7 +23,7 @@
           <td data-label="Rôle">{{ user.role }}</td>
           <td data-label="Actions">
             <div class="button-group">
-              <button class="edit-button" @click="editUser(user.userId)">Modifier</button>
+              <router-link :to="`/edit-user/${user.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteUser(user.userId)">Supprimer</button>
             </div>
           </td>
@@ -85,7 +85,8 @@ th {
   background-color: #3f72af;
   color: white;
   padding: 14px 15px;
-  text-align: center; /* Modification ici */
+  text-align: center;
+  /* Modification ici */
   font-weight: 500;
 }
 
@@ -93,12 +94,14 @@ td {
   padding: 12px 15px;
   border-bottom: 1px solid #e0e0e0;
   background-color: white;
-  text-align: center; /* Ajout pour aligner tout le contenu */
+  text-align: center;
+  /* Ajout pour aligner tout le contenu */
 }
 
 td:first-child,
 td:nth-child(4) {
-  text-align: center; /* Renforcement de l'alignement */
+  text-align: center;
+  /* Renforcement de l'alignement */
 }
 
 tr:hover td {
@@ -187,7 +190,9 @@ button:hover {
     padding: 15px;
   }
 
-  th { display: none; }
+  th {
+    display: none;
+  }
 
   td {
     display: block;

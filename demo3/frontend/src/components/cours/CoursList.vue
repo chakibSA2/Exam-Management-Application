@@ -7,21 +7,21 @@
 
     <table>
       <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Actions</th>
-      </tr>
+        <tr>
+          <th>Titre</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="course in courses" :key="course.id">
-        <td data-label="Titre">{{ course.title }}</td>
-        <td data-label="Actions">
-          <div class="button-group">
-            <button class="edit-button" @click="editCourse(course.id)">Modifier</button>
-            <button class="delete-button" @click="deleteCourse(course.id)">Supprimer</button>
-          </div>
-        </td>
-      </tr>
+        <tr v-for="course in courses" :key="course.id">
+          <td data-label="Titre">{{ course.title }}</td>
+          <td data-label="Actions">
+            <div class="button-group">
+              <router-link :to="`/edit-course/${course.id}`" class="edit-button">Modifier</router-link>
+              <button class="delete-button" @click="deleteCourse(course.id)">Supprimer</button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
 
@@ -46,14 +46,14 @@ const fetchCourses = async () => {
 
 const deleteCourse = async (courseId) => {
   if (!confirm("Voulez-vous vraiment supprimer ce cours ?")) return;
-  
+
   try {
     const response = await fetch(`http://localhost:8080/api/courses/delete/${courseId}`, {
       method: "DELETE",
     });
 
     if (!response.ok) throw new Error("Échec de la suppression du cours.");
-    
+
     courses.value = courses.value.filter(course => course.courseId !== courseId);
   } catch (error) {
     console.error(error);

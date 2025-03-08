@@ -23,7 +23,7 @@
           <td data-label="Date">{{ formatDate(exam.date) }}</td>
           <td data-label="Actions">
             <div class="button-group">
-              <button class="edit-button" @click="editExam(exam.id)">Modifier</button>
+              <router-link :to="`/edit-exam/${exam.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteExam(exam.id)">Supprimer</button>
             </div>
           </td>
