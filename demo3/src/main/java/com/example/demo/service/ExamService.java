@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.model.Exam;
 import com.example.demo.model.Roles;
 import com.example.demo.repository.ExamRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,43 @@ public class ExamService {
         return examRepository.save(exam);
     }
 
+    public Exam updateExam(Exam exam) {
+        // Vérifier si l'examen existe déjà
+        Optional<Exam> existingExamOpt = examRepository.findById(exam.getId());
+
+        if (existingExamOpt.isEmpty()) {
+            throw new EntityNotFoundException("Examen non trouvé avec l'ID : " + exam.getId());
+        }
+
+        Exam existingExam = existingExamOpt.get();
+
+        // Vérifier si l'utilisateur est bien un enseignant
+        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.ADMIN)) {
+            throw new IllegalArgumentException("Seuls les personnel d'administration peuvent modifier un examen.");
+        }
+
+        // Vérifier que l'utilisateur est bien un enseignant
+        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.TEACHER)) {
+            throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent modifier des examens.");
+        }
+
+        // Mettre à jour uniquement les champs nécessaires
+        existingExam.setTitle(exam.getTitle());
+        existingExam.setDate(exam.getDate());
+        existingExam.setDate(exam.getDate());
+        existingExam.setCourse(exam.getCourse());
+
+        return examRepository.save(existingExam);
+    }
+
+    public boolean deleteExamById(Long examId) {
+        if (examRepository.existsById(examId)) {
+            examRepository.deleteById(examId);
+            return true;
+        }
+        return false;
+    }
+
     public List<Exam> getAllExams() {
         return examRepository.findAll();
     }
@@ -39,5 +78,9 @@ public class ExamService {
 
     public List<Exam> getExamsByTeacher(String teacherId) {
         return examRepository.findExamsByTeacher(teacherId);
+    }
+
+    public Exam getExamByTeacher(String teacherId) {
+        return examRepository.findExamsByTeacher(teacherId).getFirst();
     }
 }

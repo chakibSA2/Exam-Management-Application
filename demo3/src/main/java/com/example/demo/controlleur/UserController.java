@@ -50,4 +50,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Users> updateUser(@RequestBody Users user) {
+        return ResponseEntity.ok(userService.updateUser(user));
+    }
 }

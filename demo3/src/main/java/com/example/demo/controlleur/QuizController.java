@@ -24,4 +24,19 @@ public class QuizController {
     public ResponseEntity<List<Quiz>> getAllQuizzes() {
         return ResponseEntity.ok(quizService.getAllQuizzes());
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteQuizById(@PathVariable Long quizId) {
+        boolean isDeleted = quizService.deleteQuizById (quizId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Question supprimé avec succès.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Quiz> updateQuiz(@RequestBody Quiz quiz) {
+        return ResponseEntity.ok(quizService.updateQuiz(quiz));
+    }
 }

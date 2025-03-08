@@ -33,14 +33,28 @@ public class ExamController {
         return exam.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/teacher/{teacherId}")
+    @GetMapping("/teacher/{teacherId}/All")
     public ResponseEntity<List<Exam>> getExamsByTeacher(@PathVariable String teacherId) {
         return ResponseEntity.ok(examService.getExamsByTeacher(teacherId));
     }
 
-    @DeleteMapping("/delete/{examId}")
-    public ResponseEntity<Void> deleteExam(@PathVariable Long examId) {
-        examService.deleteExam(examId);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/teacher/{teacherId}/First")
+    public ResponseEntity<Exam> getExamByTeacher(@PathVariable String teacherId) {
+        return ResponseEntity.ok(examService.getExamByTeacher(teacherId));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<Exam> updateExam(@RequestBody Exam exam) {
+        return ResponseEntity.ok(examService.updateExam(exam));
+    }
+
+    @DeleteMapping("/{examId}")
+    public ResponseEntity<String> deleteExamById(@PathVariable Long examId) {
+        boolean isDeleted = examService.deleteExamById(examId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Exam supprimé avec succès.");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

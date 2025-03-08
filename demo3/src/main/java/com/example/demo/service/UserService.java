@@ -3,9 +3,11 @@ package com.example.demo.service;
 import com.example.demo.model.Roles;
 import com.example.demo.model.Users;
 import com.example.demo.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,5 +44,19 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public Users updateUser(Users user) {
+        Users existingUser = userRepository.findById(user.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("Utilisateur non trouvé"));
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setFirstName(user.getFirstName());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setRole(user.getRole());
+        existingUser.setActive(user.getActive());
+
+        return userRepository.save(existingUser);
     }
 }

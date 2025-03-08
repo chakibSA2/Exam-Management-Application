@@ -27,4 +27,8 @@ public class Course {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public Long getId() {
+        return id;
+    }
 }

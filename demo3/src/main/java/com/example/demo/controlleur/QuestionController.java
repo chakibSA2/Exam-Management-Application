@@ -32,11 +32,16 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getQuestionsByExam(examId));
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<Question> updateQuestion(@RequestBody Question question) {
+        return ResponseEntity.ok(questionService.updateQuestion(question));
+    }
+
     @DeleteMapping("/delete/{questionId}")
-    public ResponseEntity<Void> deleteQuestion(@PathVariable Long questionId) {
-        boolean deleted = questionService.deleteQuestion(questionId);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
+    public ResponseEntity<String> deleteExamById(@PathVariable Long questionId) {
+        boolean isDeleted = questionService.deleteQuestionById(questionId);
+        if (isDeleted) {
+            return ResponseEntity.ok("Question supprimé avec succès.");
         } else {
             return ResponseEntity.notFound().build();
         }

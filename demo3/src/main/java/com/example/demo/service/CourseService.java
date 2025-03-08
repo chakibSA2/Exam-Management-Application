@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Course;
 import com.example.demo.repository.CourseRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +33,13 @@ public class CourseService {
             return true;
         }
         return false;
+    }
+
+    public Course updateCourse(Course course) {
+        Course existingCourse = courseRepository.findById(course.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cours non trouvé"));
+
+        existingCourse.setTitle(course.getTitle());
+        return courseRepository.save(existingCourse);
     }
 }
