@@ -9,7 +9,7 @@
       <thead>
         <tr>
           <th>Titre</th>
-          <th>Prof</th>
+          <th>Professeur</th>
           <th>Cours</th>
           <th>Actions</th>
         </tr>
@@ -17,8 +17,8 @@
       <tbody>
         <tr v-for="exam in exams" :key="exam.id">
           <td>{{ exam.title }}</td>
-          <td>{{ exam.teacher.name }}</td> 
-          <td>{{ exam.course }}</td>
+          <td>{{ exam.teacher.firstName }} {{ exam.teacher.lastName }}</td>
+          <td>{{ exam.course.courseName }}</td>
           <td>
             <button @click="deleteExam(exam.id)">Supprimer</button>
           </td>
@@ -47,15 +47,15 @@ const fetchExams = async () => {
 
 const deleteExam = async (examId) => {
   if (!confirm("Voulez-vous vraiment supprimer cet examen ?")) return;
-  
+
   try {
     const response = await fetch(`http://localhost:8080/api/exams/delete/${examId}`, {
       method: "DELETE",
     });
 
     if (!response.ok) throw new Error("Échec de la suppression de l'examen.");
-    
-    exams.value = exams.value.filter(exam => exam.examId !== examId);
+
+    exams.value = exams.value.filter(exam => exam.id !== examId);
   } catch (error) {
     console.error(error);
   }
@@ -102,7 +102,8 @@ table {
   border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   text-align: left;

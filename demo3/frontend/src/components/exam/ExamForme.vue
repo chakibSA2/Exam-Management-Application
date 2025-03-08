@@ -5,11 +5,24 @@
       <label>Titre de l'examen</label>
       <input v-model="exam.title" type="text" required />
 
-      <label>ID du Professeur</label>
-      <input v-model="exam.teacherId" type="text" required />
+      <label>Date de l'examen</label>
+      <input v-model="exam.date" type="datetime-local" required />
 
-      <label>Nom du cours</label>
-      <input v-model="exam.course" type="text" required />
+      <label>Professeur</label>
+      <select v-model="exam.teacherId" required>
+        <option value="" disabled>Sélectionner un professeur</option>
+        <option v-for="teacher in teachers" :key="teacher.userId" :value="teacher.userId">
+          {{ teacher.firstName }} {{ teacher.lastName }}
+        </option>
+      </select>
+
+      <label>Cours</label>
+      <select v-model="exam.courseId" required>
+        <option value="" disabled>Sélectionner un cours</option>
+        <option v-for="course in courses" :key="course.id" :value="course.id">
+          {{ course.title }}
+        </option>
+      </select>
 
       <button type="submit">Ajouter</button>
     </form>
@@ -17,19 +30,48 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-
 const exam = ref({
   title: "",
+  date: "",
   teacherId: "",
-  course: ""
+  courseId: "",
 });
 
-const createExam = async () => {
+const teachers = ref([]);
+const courses = ref([]);
+
+const fetchTeachers = async () => {
   try {
+    const response = await fetch("http://localhost:8080/api/users/teachers");
+    if (!response.ok) throw new Error("Erreur lors de la récupération des enseignants.");
+    teachers.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const fetchCourses = async () => {
+  try {
+    const response = await fetch("http://localhost:8080/api/courses/all");
+    if (!response.ok) throw new Error("Erreur lors de la récupération des cours.");
+    courses.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const createExam = async () => {
+  if (!exam.value.date) {
+    alert("Veuillez sélectionner une date.");
+    return;
+  }
+
+  try {
+    exam.value.date = new Date(exam.value.date).toISOString(); // Conversion au format ISO
     const response = await fetch("http://localhost:8080/api/exams/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -39,12 +81,17 @@ const createExam = async () => {
     if (!response.ok) throw new Error("Erreur lors de la création de l'examen.");
 
     alert("Examen créé avec succès !");
-    router.push("/");
+    router.push("/exams");
   } catch (error) {
     console.error(error);
     alert("Une erreur s'est produite lors de la création.");
   }
 };
+
+onMounted(() => {
+  fetchTeachers();
+  fetchCourses();
+});
 </script>
 
 <style scoped>
@@ -68,7 +115,8 @@ form label {
   font-weight: bold;
 }
 
-form input {
+form input,
+form select {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
