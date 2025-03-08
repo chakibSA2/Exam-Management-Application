@@ -7,21 +7,21 @@
 
     <table>
       <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Actions</th>
-      </tr>
+        <tr>
+          <th>Titre</th>
+          <th>Actions</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="question in questions" :key="question.id">
-        <td data-label="Titre">{{ question.title }}</td>
-        <td data-label="Actions">
-          <div class="button-group">
-            <button class="edit-button" @click="editQuestion(question.id)">Modifier</button>
-            <button class="delete-button" @click="deleteQuestion(question.id)">Supprimer</button>
-          </div>
-        </td>
-      </tr>
+        <tr v-for="question in questions" :key="question.id">
+          <td data-label="Titre">{{ question.title }}</td>
+          <td data-label="Actions">
+            <div class="button-group">
+              <router-link :to="`/edit-question/${question.id}`" class="edit-button">Modifier</router-link>
+              <button class="delete-button" @click="deleteQuestion(question.id)">Supprimer</button>
+            </div>
+          </td>
+        </tr>
       </tbody>
     </table>
 
