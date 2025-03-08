@@ -8,6 +8,7 @@
           <li><router-link to="/users">Utilisateurs</router-link></li>
           <li><router-link to="/cours">Cours</router-link></li>
           <li><router-link to="/questions">Questions</router-link></li>
+          <li><router-link to="/quizes">Quiz</router-link></li>
         </ul>
       </nav>
     </header>

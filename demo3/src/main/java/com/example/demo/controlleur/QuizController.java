@@ -20,12 +20,12 @@ public class QuizController {
         return ResponseEntity.ok(quizService.addQuiz(quiz));
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<Quiz>> getAllQuizzes() {
         return ResponseEntity.ok(quizService.getAllQuizzes());
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{quizId}")
     public ResponseEntity<String> deleteQuizById(@PathVariable Long quizId) {
         boolean isDeleted = quizService.deleteQuizById (quizId);
         if (isDeleted) {
@@ -34,9 +34,9 @@ public class QuizController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @PutMapping("/update")
-    public ResponseEntity<Quiz> updateQuiz(@RequestBody Quiz quiz) {
-        return ResponseEntity.ok(quizService.updateQuiz(quiz));
+    @PutMapping("/update/{quizId}")
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long quizId, @RequestBody Quiz quiz) {
+        return ResponseEntity.ok(quizService.updateQuiz(quizId, quiz));
     }
+
 }

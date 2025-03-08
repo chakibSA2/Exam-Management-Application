@@ -8,6 +8,9 @@ import CoursView from "./views/CoursView.vue";
 import CoursForme from "./components/CoursForme.vue";
 import QuestionView from "./views/QuestionView.vue";
 import QuestionForm from "./components/QuestionForm.vue";
+import QuizView from "./views/QuizView.vue";
+import QuizForme from "./components/QuizForme.vue";
+import EditQuiz from "./components/editQuiz.vue";
 
 const routes = [
     { path: "/", component: HomeView },
@@ -19,6 +22,9 @@ const routes = [
     { path: "/create-cours", component: CoursForme },
     { path: "/questions", component: QuestionView },
     { path: "/create-question", component: QuestionForm },
+    { path: "/quizes", component: QuizView },
+    { path: "/create-quiz", component: QuizForme },
+    { path: "/edit-quiz/:quizId", component: EditQuiz, props: true },
 ];
 
 const router = createRouter({

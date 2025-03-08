@@ -22,14 +22,15 @@ public class QuizService {
         return quizRepository.findAll();
     }
 
-    public Quiz updateQuiz(Quiz quiz) {
-        Quiz existingQuiz = quizRepository.findById(quiz.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Quiz non trouvé"));
+    public Quiz updateQuiz(Long quizId, Quiz quiz) {
+        Quiz existingQuiz = quizRepository.findById(quizId)
+                .orElseThrow(() -> new EntityNotFoundException("Quiz non trouvé avec l'ID : " + quizId));
 
         existingQuiz.setTitle(quiz.getTitle());
 
         return quizRepository.save(existingQuiz);
     }
+
 
     public boolean deleteQuizById(Long quizId) {
         if (quizRepository.existsById(quizId)) {
