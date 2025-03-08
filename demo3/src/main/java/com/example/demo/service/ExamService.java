@@ -7,7 +7,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +80,6 @@ public class ExamService {
     }
 
     public Exam getExamByTeacher(String teacherId) {
-        return examRepository.findExamsByTeacher(teacherId).getFirst();
+        return examRepository.findExamsByTeacher(teacherId).get(0);
     }
 }

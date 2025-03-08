@@ -27,7 +27,6 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getAllCourses());
     }
 
-<<<<<<< HEAD
     @GetMapping("/{courseId}")
     public ResponseEntity<Course> getCourseById(@PathVariable Long courseId) {
         Optional<Course> course = courseService.getCourseById(courseId);
@@ -39,20 +38,13 @@ public class CourseController {
         boolean deleted = courseService.deleteCourse(courseId);
         if (deleted) {
             return ResponseEntity.noContent().build();
-=======
+        }
+        return null;
+    }
+
     @PutMapping("/update")
     public ResponseEntity<Course> updateCourse(@RequestBody Course course) {
         return ResponseEntity.ok(courseService.updateCourse(course));
     }
 
-    @DeleteMapping("/{courseId}")
-    public ResponseEntity<String> deleteCourseById(@PathVariable Long courseId) {
-        boolean isDeleted = courseService.deleteCourseById (courseId);
-        if (isDeleted) {
-            return ResponseEntity.ok("Course supprimé avec succès.");
->>>>>>> cdfa9ba (nsm)
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }
