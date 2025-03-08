@@ -35,9 +35,6 @@ public class ExamService {
     }
 
     public Exam addExam(Exam exam) {
-        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.ADMIN)) {
-            throw new IllegalArgumentException("Seuls le personnel d'administration peut créer des examens.");
-        }
         return examRepository.save(exam);
     }
 
