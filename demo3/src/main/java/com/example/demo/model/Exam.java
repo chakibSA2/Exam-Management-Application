@@ -1,4 +1,6 @@
 package com.example.demo.model;
+import com.example.demo.service.CourseService;
+import com.example.demo.service.UserService;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.*;
 
@@ -28,6 +30,12 @@ public class Exam {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
+    @Transient
+    private String teacherId;
+
+    @Transient
+    private Long courseId;
+
     public Exam() {}
 
     public Exam(String examTitle, LocalDateTime date, Users teacher, Course course) {
@@ -45,6 +53,22 @@ public class Exam {
             throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
         }
         this.teacher = teacher;
+    }
+
+    public String getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public Users getTeacher() {

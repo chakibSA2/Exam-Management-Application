@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -32,6 +35,10 @@ public class Users {
 
     @Column(name = "active")
     private Boolean active;
+
+    @JsonIgnoreProperties("exams") // ou @JsonIgnore
+    @OneToMany(mappedBy = "teacher")
+    private List<Exam> exams;
 
     public Users() {
     }
