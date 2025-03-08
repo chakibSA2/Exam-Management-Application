@@ -11,16 +11,21 @@
           <th>Titre</th>
           <th>Professeur</th>
           <th>Cours</th>
+          <th>Date</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="exam in exams" :key="exam.id">
-          <td>{{ exam.title }}</td>
-          <td>{{ exam.teacher.firstName }} {{ exam.teacher.lastName }}</td>
-          <td>{{ exam.course.courseName }}</td>
-          <td>
-            <button @click="deleteExam(exam.id)">Supprimer</button>
+          <td data-label="Titre">{{ exam.title }}</td>
+          <td data-label="Professeur">{{ exam.teacher.firstName }} {{ exam.teacher.lastName }}</td>
+          <td data-label="Cours">{{ exam.course.title }}</td>
+          <td data-label="Date">{{ formatDate(exam.date) }}</td>
+          <td data-label="Actions">
+            <div class="button-group">
+              <button class="edit-button" @click="editExam(exam.id)">Modifier</button>
+              <button class="delete-button" @click="deleteExam(exam.id)">Supprimer</button>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -34,6 +39,18 @@
 import { ref, onMounted } from "vue";
 
 const exams = ref([]);
+
+// Ajoutez cette fonction de formatage
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).replace(',', '');
+};
 
 const fetchExams = async () => {
   try {
@@ -66,63 +83,171 @@ onMounted(fetchExams);
 
 <style scoped>
 .list-container {
-  width: 600px;
-  margin: 20px auto;
+  max-width: 1200px;
+  margin: 2rem auto;
   padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: white;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: fit-content;
+  min-width: 60%;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  padding: 0 10px;
 }
 
 h2 {
+  color: #2c3e50;
   margin: 0;
 }
 
-.create-button {
-  padding: 8px 12px;
-  background: blue;
-  color: white;
-  text-decoration: none;
-  border-radius: 4px;
-}
-
-.create-button:hover {
-  background: darkblue;
-}
-
 table {
-  width: 100%;
+  width: auto;
   border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  text-align: left;
+  margin: 0 auto;
+  min-width: 600px;
 }
 
 th {
-  background: #f4f4f4;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 15px;
+  text-align: center;
+  font-weight: 600;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  background-color: white;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background-color: #f5f5f5;
+}
+
+.create-button {
+  background-color: #28a745;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: transform 0.2s, background-color 0.2s;
+}
+
+.create-button:hover {
+  background-color: #218838;
+  transform: translateY(-1px);
+}
+
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.edit-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
 button {
-  background: red;
+  background-color: #dc3545;
   color: white;
-  padding: 5px 10px;
   border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
   cursor: pointer;
-  border-radius: 3px;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background: darkred;
+  background-color: #c82333;
+}
+
+p {
+  text-align: center;
+  color: #6c757d;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .list-container {
+    width: 95%;
+    padding: 10px;
+  }
+
+  table {
+    min-width: unset;
+    width: 100%;
+  }
+
+  th {
+    display: none;
+  }
+
+  td {
+    display: block;
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+    white-space: normal;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .create-button {
+    width: 100%;
+    text-align: center;
+  }
 }
 </style>

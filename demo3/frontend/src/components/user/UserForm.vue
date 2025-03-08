@@ -65,45 +65,88 @@ const createUser = async () => {
 
 <style scoped>
 .form-container {
-  width: 400px;
-  margin: 20px auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background: white;
+  max-width: 500px;
+  margin: 2rem auto;
+  padding: 25px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 h2 {
+  color: #2c3e50;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 1.5rem;
+  font-size: 1.8em;
 }
 
-form label {
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+label {
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
   display: block;
-  margin-top: 10px;
-  font-weight: bold;
 }
 
-form input, form select {
+input, select {
   width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 10px 15px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: all 0.3s ease;
 }
 
-button {
-  width: 100%;
-  margin-top: 15px;
-  padding: 10px;
-  background: #007bff;
+input:focus, select:focus {
+  border-color: #4a90e2;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+button[type="submit"] {
+  background-color: #4f46e5;
   color: white;
+  padding: 12px 25px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1.1em;
   cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 1rem;
 }
 
-button:hover {
-  background: #0056b3;
+button[type="submit"]:hover {
+  background-color: #24773f;
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    margin: 1rem;
+    padding: 20px;
+  }
+
+  input, select {
+    padding: 8px 12px;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  h2 {
+    font-size: 1.5em;
+  }
+
+  label {
+    font-size: 0.9em;
+  }
 }
 </style>
