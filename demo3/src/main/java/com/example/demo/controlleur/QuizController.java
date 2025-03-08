@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/quizzes")
@@ -23,6 +24,11 @@ public class QuizController {
     @GetMapping("/all")
     public ResponseEntity<List<Quiz>> getAllQuizzes() {
         return ResponseEntity.ok(quizService.getAllQuizzes());
+    }
+
+    @GetMapping("/{quizId}")
+    public ResponseEntity<Optional<Quiz>> getQuizByid(Long quizId) {
+        return ResponseEntity.ok(quizService.getQuizById(quizId));
     }
 
     @DeleteMapping("/{quizId}")

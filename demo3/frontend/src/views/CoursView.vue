@@ -5,6 +5,6 @@
 </template>
 
 <script setup>
-import CoursList from '@/components/CoursList.vue';
+import CoursList from '@/components/cours/CoursList.vue';
 
 </script>

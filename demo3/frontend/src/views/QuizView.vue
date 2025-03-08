@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import QuizeList from "@/components/QuizeList.vue";
+import QuizeList from "@/components/quiz/QuizeList.vue";
 </script>

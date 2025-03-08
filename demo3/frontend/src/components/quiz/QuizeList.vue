@@ -13,53 +13,30 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="quiz in quizzes" :key="quiz.quizId">
+                <tr v-for="quiz in quizStore.quizzes" :key="quiz.quizId">
                     <td>{{ quiz.title }}</td>
                     <td>
-                        <button @click="deleteQuiz(quiz.quizId)">Supprimer</button>
+                        <button @click="quizStore.deleteQuiz(quiz.quizId)">Supprimer</button>
                         <router-link :to="`/edit-quiz/${quiz.quizId}`" class="edit-button">Modifier</router-link>
+
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <p v-if="quizzes.length === 0">Aucun quiz disponible.</p>
+        <p v-if="quizStore.quizzes.length === 0">Aucun quiz disponible.</p>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { onMounted } from "vue";
+import { useQuizStore } from "@/store/quizStore";
 
-const quizzes = ref([]);
+const quizStore = useQuizStore();
 
-const fetchQuizzes = async () => {
-    try {
-        const response = await fetch("http://localhost:8080/api/quizzes/all");
-        if (!response.ok) throw new Error("Erreur lors de la récupération des quiz.");
-        quizzes.value = await response.json();
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-const deleteQuiz = async (quizId) => {
-    if (!confirm("Voulez-vous vraiment supprimer ce quiz ?")) return;
-
-    try {
-        const response = await fetch(`http://localhost:8080/api/quizzes/${quizId}`, {
-            method: "DELETE",
-        });
-
-        if (!response.ok) throw new Error("Échec de la suppression du quiz.");
-
-        quizzes.value = quizzes.value.filter(quiz => quiz.quizId !== quizId);
-    } catch (error) {
-        console.error(error);
-    }
-};
-
-onMounted(fetchQuizzes);
+onMounted(quizStore.fetchQuizzes);
 </script>
+
 
 <style scoped>
 .list-container {

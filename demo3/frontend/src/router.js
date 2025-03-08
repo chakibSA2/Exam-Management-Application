@@ -1,16 +1,16 @@
 import { createRouter, createWebHistory } from "vue-router";
 import UsersView from "@/views/UsersView.vue";
-import UserForm from "@/components/UserForm.vue";
-import ExamForme from "./components/ExamForme.vue";
-import ExamListe from "./components/ExamListe.vue";
+import UserForm from "@/components/user/UserForm.vue";
+import ExamForme from "./components/exam/ExamForme.vue";
+import ExamListe from "./components/exam/ExamListe.vue";
 import HomeView from "./views/HomeView.vue";
 import CoursView from "./views/CoursView.vue";
-import CoursForme from "./components/CoursForme.vue";
+import CoursForme from "./components/cours/CoursForme.vue";
 import QuestionView from "./views/QuestionView.vue";
-import QuestionForm from "./components/QuestionForm.vue";
+import QuestionForm from "./components/question/QuestionForm.vue";
 import QuizView from "./views/QuizView.vue";
-import QuizForme from "./components/QuizForme.vue";
-import EditQuiz from "./components/editQuiz.vue";
+import QuizForme from "./components/quiz/QuizForme.vue";
+import EditQuiz from "./components/quiz/editQuiz.vue";
 
 const routes = [
     { path: "/", component: HomeView },
