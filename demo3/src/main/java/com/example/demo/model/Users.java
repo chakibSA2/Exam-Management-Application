@@ -36,7 +36,7 @@ public class Users {
     @Column(name = "active")
     private Boolean active;
 
-    @JsonIgnoreProperties("exams") // ou @JsonIgnore
+    @JsonIgnoreProperties("exams")
     @OneToMany(mappedBy = "teacher")
     private List<Exam> exams;
 

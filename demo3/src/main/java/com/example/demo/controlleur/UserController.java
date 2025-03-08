@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-
+@CrossOrigin(origins = "http://localhost:5174")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -27,6 +27,10 @@ public class UserController {
     public ResponseEntity<Users> getUserById(@PathVariable String userId) {
         Optional<Users> user = userService.getUserById(userId);
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    @GetMapping("/teachers")
+    public ResponseEntity<List<Users>> getAllTeachers() {
+        return ResponseEntity.ok(userService.getAllTeachers());
     }
 
     @GetMapping("/all")

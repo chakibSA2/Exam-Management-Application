@@ -1,10 +1,6 @@
 package com.example.demo.model;
-import com.example.demo.service.CourseService;
-import com.example.demo.service.UserService;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -30,10 +26,10 @@ public class Exam {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
-    @Transient
+    @Transient // ✅ Champ utilisé pour récupérer l'ID du prof depuis le front
     private String teacherId;
 
-    @Transient
+    @Transient // ✅ Champ utilisé pour récupérer l'ID du cours depuis le front
     private Long courseId;
 
     public Exam() {}
@@ -48,27 +44,29 @@ public class Exam {
         this.course = course;
     }
 
-    public void setTeacher(Users teacher) {
-        if (!teacher.getRole().equals(Roles.TEACHER)) {
-            throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
-        }
-        this.teacher = teacher;
+    // ✅ Ajout de la gestion des IDs transients pour faciliter la liaison avec le front
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     public String getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 
     public Long getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
+    // ✅ Garder tous les getters et setters existants
+    public void setTeacher(Users teacher) {
+        if (!teacher.getRole().equals(Roles.TEACHER)) {
+            throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
+        }
+        this.teacher = teacher;
     }
 
     public Users getTeacher() {
