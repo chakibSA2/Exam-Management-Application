@@ -51,11 +51,6 @@ public class ExamService {
 
         Exam existingExam = existingExamOpt.get();
 
-        // Vérifier si l'utilisateur est bien un personnel administratif
-        if (!userService.isUserRole(exam.getTeacher().getUserId(), Roles.ADMIN)) {
-            throw new IllegalArgumentException("Seuls le personnel d'administration peut modifier un examen.");
-        }
-
         // Mettre à jour uniquement les champs nécessaires
         existingExam.setTitle(exam.getTitle());
         existingExam.setDate(exam.getDate());
