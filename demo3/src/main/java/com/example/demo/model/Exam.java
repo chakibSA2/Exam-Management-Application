@@ -1,7 +1,9 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "exam")
@@ -26,13 +28,21 @@ public class Exam {
     @JoinColumn(name = "course_id", referencedColumnName = "course_id", nullable = false)
     private Course course;
 
-    @Transient // ✅ Champ utilisé pour récupérer l'ID du prof depuis le front
+    @Transient
     private String teacherId;
 
-    @Transient // ✅ Champ utilisé pour récupérer l'ID du cours depuis le front
+    @Transient
     private Long courseId;
 
-    public Exam() {}
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST,
+            CascadeType.MERGE})
+    @JoinTable(name = "exams_students",
+            joinColumns = {@JoinColumn(name = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    public List<Users> studentsExams;
+
+    public Exam() {
+    }
 
     public Exam(String examTitle, LocalDateTime date, Users teacher, Course course) {
         if (!teacher.getRole().equals(Roles.TEACHER)) {
@@ -67,6 +77,14 @@ public class Exam {
             throw new IllegalArgumentException("Seuls les enseignants (ENSxxx) peuvent être assignés à un examen.");
         }
         this.teacher = teacher;
+    }
+
+    public List<Users> getStudentsExams() {
+        return studentsExams;
+    }
+
+    public void setStudentsExams(List<Users> studentsExams) {
+        this.studentsExams = studentsExams;
     }
 
     public Users getTeacher() {

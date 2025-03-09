@@ -48,4 +48,22 @@ public class QuizController {
         return ResponseEntity.ok(quizService.updateQuiz(quizId, quiz));
     }
 
+    @PutMapping("/{quizId}/associate-questions")
+    public ResponseEntity<Quiz> associateQuestionsToQuiz(
+            @PathVariable Long quizId,
+            @RequestBody List<Long> questionIds) {
+
+        Quiz updatedQuiz = quizService.associateQuestions(quizId, questionIds);
+        return ResponseEntity.ok(updatedQuiz);
+    }
+
+    @DeleteMapping("/{quizId}/remove-questions")
+    public ResponseEntity<Quiz> removeQuestionsFromQuiz(
+            @PathVariable Long quizId,
+            @RequestBody List<Long> questionIds) {
+
+        Quiz updatedQuiz = quizService.removeQuestionsFromQuiz(quizId, questionIds);
+        return ResponseEntity.ok(updatedQuiz);
+    }
+
 }

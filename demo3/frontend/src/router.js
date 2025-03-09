@@ -15,6 +15,7 @@ import EditQuiz from "./components/quiz/EditQuiz.vue";
 import EditExam from "./components/exam/EditExam.vue";
 import EditQuestion from "./components/question/EditQuestion.vue";
 import EditUser from "./components/user/EditUser.vue";
+import QuizAssociation from "./components/quiz/QuizAssociation.vue";
 
 
 const routes = [
@@ -39,6 +40,7 @@ const routes = [
     { path: "/quizes", component: QuizView },
     { path: "/create-quiz", component: QuizForme },
     { path: "/edit-quiz/:quizId", component: EditQuiz, props: true },
+    { path: "/associate-questions/:quizId", component: QuizAssociation, props: true },
 ];
 
 const router = createRouter({

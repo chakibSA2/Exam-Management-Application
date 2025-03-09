@@ -1,32 +1,33 @@
 <template>
-    <div class="list-container">
-        <div class="header">
-            <h2>Liste des Quiz</h2>
-            <router-link to="/create-quiz" class="create-button">Créer un Quiz</router-link>
-        </div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="quiz in quizStore.quizzes" :key="quiz.id">
-                    <td>{{ quiz.title }}</td>
-                    <td>
-                      <div class=button-group>
-                        <router-link :to="`/edit-quiz/${quiz.id}`" class="edit-button">Modifier</router-link>
-                        <button class="delete-button" @click="quizStore.deleteQuiz(quiz.id)">Supprimer</button>
-                      </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <p v-if="quizStore.quizzes.length === 0">Aucun quiz disponible.</p>
+  <div class="list-container">
+    <div class="header">
+      <h2>Liste des Quiz</h2>
+      <router-link to="/create-quiz" class="create-button">Créer un Quiz</router-link>
     </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="quiz in quizStore.quizzes" :key="quiz.id">
+          <td>{{ quiz.title }}</td>
+          <td>
+            <div class=button-group>
+              <router-link :to="`/associate-questions/${quiz.id}`" class="edit-button">Associer</router-link>
+              <router-link :to="`/edit-quiz/${quiz.id}`" class="edit-button">Modifier</router-link>
+              <button class="delete-button" @click="quizStore.deleteQuiz(quiz.id)">Supprimer</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p v-if="quizStore.quizzes.length === 0">Aucun quiz disponible.</p>
+  </div>
 </template>
 
 <script setup>
@@ -172,7 +173,9 @@ p {
     border-radius: 8px;
   }
 
-  th { display: none; }
+  th {
+    display: none;
+  }
 
   td {
     display: block;
@@ -192,7 +195,8 @@ p {
     color: #1e293b;
   }
 
-  .edit-button, button {
+  .edit-button,
+  button {
     width: 100%;
     text-align: center;
     margin: 0.25rem 0;
