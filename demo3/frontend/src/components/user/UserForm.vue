@@ -31,6 +31,10 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 const user = ref({
   username: "",
@@ -56,6 +60,7 @@ const createUser = async () => {
 
     const newUser = await response.json();
     emit("userCreated", newUser);
+    router.push("/users");
 
     user.value = { username: "", firstName: "", lastName: "", email: "", password: "", role: "STUDENT", active: true };
   } catch (error) {
@@ -94,7 +99,8 @@ label {
   display: block;
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 10px 15px;
   border: 2px solid #e2e8f0;
@@ -103,7 +109,8 @@ input, select {
   transition: all 0.3s ease;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
   border-color: #4a90e2;
   outline: none;
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
@@ -131,7 +138,8 @@ button[type="submit"]:hover {
     padding: 20px;
   }
 
-  input, select {
+  input,
+  select {
     padding: 8px 12px;
   }
 

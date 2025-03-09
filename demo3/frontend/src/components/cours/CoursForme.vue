@@ -31,7 +31,7 @@ const createCourse = async () => {
     if (!response.ok) throw new Error("Erreur lors de la création du cours.");
 
     alert("Cours créé avec succès !");
-    router.push("/exams");
+    router.push("/cours");
   } catch (error) {
     console.error(error);
     alert("Une erreur s'est produite lors de la création.");
