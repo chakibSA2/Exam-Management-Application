@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.Exam;
 import com.example.demo.model.Question;
+import com.example.demo.model.Users;
 import com.example.demo.repository.ExamRepository;
 import com.example.demo.repository.QuestionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,14 +21,13 @@ public class QuestionService {
     @Autowired
     private ExamRepository examRepository;
 
-    public Question addQuestionToExam(Long examId, Question question) {
-        Optional<Exam> exam = examRepository.findById(examId);
-        if (exam.isPresent()) {
-            question.setExam(exam.get());
-            return questionRepository.save(question);
-        } else {
-            throw new IllegalArgumentException("Examen introuvable pour l'ID : " + examId);
+    public Question addQuestion(Question question) {
+        Optional<Exam> examOpt = examRepository.findById(question.getExamId());
+        if (examOpt.isEmpty()) {
+            throw new EntityNotFoundException("Professeur introuvable avec ID : " + question.getExamId());
         }
+        question.setExam(examOpt.get());
+        return questionRepository.save(question);
     }
 
     public Optional<Question> getQuestionById(Long questionId) {

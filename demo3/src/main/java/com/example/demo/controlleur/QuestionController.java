@@ -17,14 +17,16 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @PostMapping("/create/{examId}")
-    public ResponseEntity<Question> addQuestion(@PathVariable Long examId, @RequestBody Question question) {
-        return ResponseEntity.ok(questionService.addQuestionToExam(examId, question));
+    @PostMapping("/create")
+    public ResponseEntity<Question> addQuestion(@RequestBody Question question) {
+        return ResponseEntity.ok(questionService.addQuestion(question));
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Question>> getAllQuestions() {
         return ResponseEntity.ok(questionService.getAllQuestions());
     }
+
     @GetMapping("/{questionId}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Long questionId) {
         Optional<Question> question = questionService.getQuestionById(questionId);
