@@ -37,6 +37,9 @@ public class QuestionService {
     public List<Question> getQuestionsByExam(Long examId) {
         return questionRepository.findQuestionsByExam(examId);
     }
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
 
     public Question updateQuestion(Question question) {
         Question existingQuestion = questionRepository.findById(question.getId())
