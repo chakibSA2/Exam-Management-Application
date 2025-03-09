@@ -47,4 +47,16 @@ public class CourseController {
         return ResponseEntity.ok(courseService.updateCourse(course));
     }
 
+    @PostMapping("/{courseId}/add-student/{studentId}")
+    public ResponseEntity<String> addStudentToCourse(@PathVariable Long courseId, @PathVariable String studentId) {
+        courseService.addStudentToCourse(courseId, studentId);
+        return ResponseEntity.ok("Étudiant ajouté au cours avec succès.");
+    }
+
+    @DeleteMapping("/{courseId}/remove-student/{studentId}")
+    public ResponseEntity<String> removeStudentFromCourse(@PathVariable Long courseId, @PathVariable String studentId) {
+        courseService.removeStudentFromCourse(courseId, studentId);
+        return ResponseEntity.ok("Étudiant supprimé du cours avec succès.");
+    }
+
 }
