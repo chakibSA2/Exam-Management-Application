@@ -1,6 +1,7 @@
 package com.example.demo.controlleur;
 
 import com.example.demo.model.Question;
+import com.example.demo.model.Quiz;
 import com.example.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,10 @@ public class QuestionController {
     public ResponseEntity<Question> addQuestion(@PathVariable Long examId, @RequestBody Question question) {
         return ResponseEntity.ok(questionService.addQuestionToExam(examId, question));
     }
-
+    @GetMapping("/all")
+    public ResponseEntity<List<Question>> getAllQuestions() {
+        return ResponseEntity.ok(questionService.getAllQuestions());
+    }
     @GetMapping("/{questionId}")
     public ResponseEntity<Question> getQuestionById(@PathVariable Long questionId) {
         Optional<Question> question = questionService.getQuestionById(questionId);
