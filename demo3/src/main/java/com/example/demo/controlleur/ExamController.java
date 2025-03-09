@@ -57,4 +57,16 @@ public class ExamController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/{examId}/add-student/{studentId}")
+    public ResponseEntity<String> addStudentToExam(@PathVariable Long examId, @PathVariable String studentId) {
+        examService.addStudentToExam(examId, studentId);
+        return ResponseEntity.ok("Étudiant ajouté à l'examen avec succès.");
+    }
+
+    @DeleteMapping("/{examId}/remove-student/{studentId}")
+    public ResponseEntity<String> removeStudentFromExam(@PathVariable Long examId, @PathVariable String studentId) {
+        examService.removeStudentFromExam(examId, studentId);
+        return ResponseEntity.ok("Étudiant supprimé de l'examen avec succès.");
+    }
 }
