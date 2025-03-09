@@ -12,6 +12,7 @@
           <th>Nom</th>
           <th>Email</th>
           <th>Rôle</th>
+          <th>Etat</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -21,9 +22,10 @@
           <td data-label="Nom">{{ user.firstName }} {{ user.lastName }}</td>
           <td data-label="Email">{{ user.email }}</td>
           <td data-label="Rôle">{{ user.role }}</td>
+          <td data-label="Etat">{{ user.active ? "Actif" : "Inactif" }}</td>
           <td data-label="Actions">
             <div class="button-group">
-              <router-link :to="`/edit-user/${user.id}`" class="edit-button">Modifier</router-link>
+              <router-link :to="`/edit-user/${user.userId}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteUser(user.userId)">Supprimer</button>
             </div>
           </td>

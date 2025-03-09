@@ -39,6 +39,9 @@ public class Question {
     @JoinColumn(name = "exam_id", referencedColumnName = "id", nullable = false)
     private Exam exam;
 
+    @Transient
+    private Long examId;
+
     public Question() {
     }
 
@@ -52,6 +55,14 @@ public class Question {
         this.option4 = option4;
         this.questionTitle = questionTitle;
         this.rightAnswer = rightAnswer;
+    }
+
+    public Long getExamId() {
+        return examId;
+    }
+
+    public void setExamId(Long examId) {
+        this.examId = examId;
     }
 
     public Long getId() {

@@ -8,13 +8,17 @@
     <table>
       <thead>
         <tr>
+          <th>Examen</th>
           <th>Titre</th>
+          <th>Réponse</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="question in questions" :key="question.id">
-          <td data-label="Titre">{{ question.title }}</td>
+          <td data-label="Examen">{{ question.exam.title }}</td>
+          <td data-label="Titre">{{ question.questionTitle }}</td>
+          <td data-label="Réponse">{{ question.rightAnswer }}</td>
           <td data-label="Actions">
             <div class="button-group">
               <router-link :to="`/edit-question/${question.id}`" class="edit-button">Modifier</router-link>

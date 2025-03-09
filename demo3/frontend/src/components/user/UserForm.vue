@@ -39,6 +39,7 @@ const user = ref({
   email: "",
   password: "",
   role: "STUDENT",
+  active: true
 });
 
 const emit = defineEmits(["userCreated"]);
@@ -56,7 +57,7 @@ const createUser = async () => {
     const newUser = await response.json();
     emit("userCreated", newUser);
 
-    user.value = { username: "", firstName: "", lastName: "", email: "", password: "", role: "STUDENT" };
+    user.value = { username: "", firstName: "", lastName: "", email: "", password: "", role: "STUDENT", active: true };
   } catch (error) {
     console.error(error);
   }
