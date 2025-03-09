@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -40,6 +41,21 @@ public class Users {
     @OneToMany(mappedBy = "teacher")
     private List<Exam> exams;
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE},
+            mappedBy = "students")
+    @JsonIgnore
+    List<Course> courses;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE},
+            mappedBy = "studentsExams")
+    @JsonIgnore
+    List<Exam> studentsExams;
     public Users() {
     }
 
@@ -71,10 +87,18 @@ public class Users {
         return prefix + uniquePart;
     }
 
+    public List<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
+
     public String getUserId() {
         return userId;
     }
-    
+
     public String getUsername() {
         return username;
     }

@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name = "question")
@@ -39,6 +42,16 @@ public class Question {
     @JoinColumn(name = "exam_id", referencedColumnName = "id", nullable = false)
     private Exam exam;
 
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "quizes")
+    @JsonIgnore
+    List<Quiz> Quizes;
+
     @Transient
     private Long examId;
 
@@ -55,6 +68,14 @@ public class Question {
         this.option4 = option4;
         this.questionTitle = questionTitle;
         this.rightAnswer = rightAnswer;
+    }
+
+    public List<Quiz> getQuizes() {
+        return Quizes;
+    }
+
+    public void setQuizes(List<Quiz> quizes) {
+        Quizes = quizes;
     }
 
     public Long getExamId() {

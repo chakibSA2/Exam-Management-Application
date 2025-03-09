@@ -58,4 +58,9 @@ export const useQuizStore = defineStore("quizStore", {
             }
         },
     },
+
+    async fetchQuizQuestions(quizId) {
+        const response = await fetch(`http://localhost:8080/api/quizzes/${quizId}`);
+        currentQuiz.value = await response.json();
+    }
 });
