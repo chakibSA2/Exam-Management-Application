@@ -17,7 +17,7 @@
           <td>{{ quiz.title }}</td>
           <td>
             <div class=button-group>
-              <router-link :to="`/associate-questions/${quiz.id}`" class="edit-button">Associer</router-link>
+              <router-link :to="`/associate-questions/${quiz.id}`" class="edit-button">Associer une question</router-link>
               <router-link :to="`/edit-quiz/${quiz.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="quizStore.deleteQuiz(quiz.id)">Supprimer</button>
             </div>

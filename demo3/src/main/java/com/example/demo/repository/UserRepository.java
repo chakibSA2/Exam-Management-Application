@@ -21,4 +21,7 @@ public interface UserRepository extends JpaRepository<Users, String> {
     List<Users> findLastUserIdByRole(@Param("role") Roles role, Pageable pageable);
 
     Optional<Users> findByEmail(String email);
+
+    @Query("SELECT u FROM Users u WHERE u.username = :username")
+    Optional<Users> findByUsername(@Param("username") String username);
 }

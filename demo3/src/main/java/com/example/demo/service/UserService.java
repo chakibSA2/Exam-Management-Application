@@ -24,6 +24,10 @@ public class UserService {
         return userRepository.findByRole(Roles.TEACHER);
     }
 
+    public List<Users> getAllStudents() {
+        return userRepository.findByRole(Roles.STUDENT);
+    }
+
     public List<Users> getAllUsers() {
         return userRepository.findAll();
     }
@@ -31,6 +35,8 @@ public class UserService {
     public Optional<Users> getUserById(String userId) {
         return userRepository.findById(userId);
     }
+
+    public Optional<Users> getUserByUsername(String username) { return userRepository.findByUsername(username); }
 
     public List<Users> getUsersByRole(Roles role) {
         return userRepository.findByRole(role);
