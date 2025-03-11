@@ -151,3 +151,7 @@ npm run dev
 - Mise en place de WebSockets pour la gestion des quiz en temps réel.
 - Ajout d’un système de notifications pour les examens.
 - Interface plus avancée avec Vue 3 + Composition API.
+
+
+> 🔐 **Note** : pour la prémiére connexion a l'application il faut se rendre sur swagerui et crée le premier utilisateur
+ou bien se rendre sur l'url http://localhost:5173/users pour le crée 
