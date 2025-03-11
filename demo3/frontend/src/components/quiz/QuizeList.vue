@@ -2,22 +2,23 @@
   <div class="list-container">
     <div class="header">
       <h2>Liste des Quiz</h2>
-      <router-link to="/create-quiz" class="create-button">Créer un Quiz</router-link>
+      <router-link to="/create-quiz" class="create-button" v-if='!isStudent'>Créer un Quiz</router-link>
     </div>
 
     <table>
       <thead>
         <tr>
           <th>Titre</th>
-          <th>Actions</th>
+          <th v-if='!isStudent'>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="quiz in quizStore.quizzes" :key="quiz.id">
           <td>{{ quiz.title }}</td>
-          <td>
+          <td v-if='!isStudent'>
             <div class=button-group>
-              <router-link :to="`/associate-questions/${quiz.id}`" class="edit-button">Associer une question</router-link>
+              <router-link :to="`/associate-questions/${quiz.id}`" class="edit-button">Associer une
+                question</router-link>
               <router-link :to="`/edit-quiz/${quiz.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="quizStore.deleteQuiz(quiz.id)">Supprimer</button>
             </div>
@@ -31,11 +32,12 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import { useQuizStore } from "@/store/quizStore";
+import { authStore } from "@/store/authStore";
 
 const quizStore = useQuizStore();
-
+const isStudent = computed(() => authStore.hasRole('STUDENT').value);
 onMounted(quizStore.fetchQuizzes);
 </script>
 

@@ -2,7 +2,7 @@
   <div class="list-container">
     <div class="header">
       <h2>Liste des Utilisateurs</h2>
-      <router-link to="/create-user" class="create-button">Créer un Utilisateur</router-link>
+      <router-link to="/create-user" class="create-button" v-if="isAdmin">Créer un Utilisateur</router-link>
     </div>
 
     <table>
@@ -13,7 +13,7 @@
           <th>Email</th>
           <th>Rôle</th>
           <th>Etat</th>
-          <th>Actions</th>
+          <th v-if="isAdmin">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -23,7 +23,7 @@
           <td data-label="Email">{{ user.email }}</td>
           <td data-label="Rôle">{{ user.role }}</td>
           <td data-label="Etat">{{ user.active ? "Actif" : "Inactif" }}</td>
-          <td data-label="Actions">
+          <td data-label="Actions" v-if="isAdmin">
             <div class="button-group">
               <router-link :to="`/edit-user/${user.userId}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteUser(user.userId)">Supprimer</button>
@@ -36,7 +36,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { authStore } from "@/store/authStore";
 
 const users = ref([]);
 
@@ -44,6 +45,8 @@ const fetchUsers = async () => {
   const response = await fetch("http://localhost:8080/api/users/all");
   users.value = await response.json();
 };
+
+const isAdmin = computed(() => authStore.hasRole('ADMIN').value);
 
 const deleteUser = async (userId) => {
   await fetch(`http://localhost:8080/api/users/${userId}`, { method: "DELETE" });
@@ -88,7 +91,6 @@ th {
   color: white;
   padding: 14px 15px;
   text-align: center;
-  /* Modification ici */
   font-weight: 500;
 }
 
@@ -97,13 +99,11 @@ td {
   border-bottom: 1px solid #e0e0e0;
   background-color: white;
   text-align: center;
-  /* Ajout pour aligner tout le contenu */
 }
 
 td:first-child,
 td:nth-child(4) {
   text-align: center;
-  /* Renforcement de l'alignement */
 }
 
 tr:hover td {

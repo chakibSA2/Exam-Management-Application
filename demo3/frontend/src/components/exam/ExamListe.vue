@@ -2,7 +2,7 @@
   <div class="list-container">
     <div class="header">
       <h2>Liste des Examens</h2>
-      <router-link to="/create-exam" class="create-button">Créer un Examen</router-link>
+      <router-link to="/create-exam" class="create-button" v-if="isAdmin">Créer un Examen</router-link>
     </div>
 
     <table>
@@ -12,7 +12,7 @@
           <th>Professeur</th>
           <th>Cours</th>
           <th>Date</th>
-          <th>Actions</th>
+          <th v-if="isAdmin">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -21,7 +21,7 @@
           <td data-label="Professeur">{{ exam.teacher.firstName }} {{ exam.teacher.lastName }}</td>
           <td data-label="Cours">{{ exam.course.title }}</td>
           <td data-label="Date">{{ formatDate(exam.date) }}</td>
-          <td data-label="Actions">
+          <td data-label="Actions" v-if="isAdmin">
             <div class="button-group">
               <router-link :to="`/edit-exam/${exam.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteExam(exam.id)">Supprimer</button>
@@ -36,11 +36,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-
+import { ref, onMounted, computed } from "vue";
+import { authStore } from "@/store/authStore";
 const exams = ref([]);
-
-// Ajoutez cette fonction de formatage
+const isAdmin = computed(() => authStore.hasRole('ADMIN').value);
 const formatDate = (dateString) => {
   const date = new Date(dateString);
   return date.toLocaleDateString('fr-FR', {

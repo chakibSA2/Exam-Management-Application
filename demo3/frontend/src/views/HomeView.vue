@@ -9,22 +9,22 @@
         <p>Gérer et consulter les examens.</p>
       </div>
 
-      <div class="card" @click="$router.push('/users')">
+      <div class="card" @click="$router.push('/users')" v-if="!isStudent">
         <h3>👤 Utilisateurs</h3>
         <p>Gérer les étudiants et enseignants.</p>
       </div>
 
-      <div class="card" @click="$router.push('/cours')">
+      <div class=" card" @click="$router.push('/cours')" v-if="!isStudent">
         <h3>📚 Cours</h3>
         <p>Liste des cours disponibles.</p>
       </div>
 
-      <div class="card" @click="$router.push('/questions')">
+      <div class="card" @click="$router.push('/questions')" v-if="isTeacher">
         <h3>❓ Questions</h3>
         <p>Ajouter et modifier les questions d’examen.</p>
       </div>
 
-      <div class="card" @click="$router.push('/quizes')">
+      <div class="card" @click="$router.push('/quizes')" v-if="isStudent || isTeacher">
         <h3>📝 Quiz</h3>
         <p>Créer et gérer des quiz.</p>
       </div>
@@ -33,7 +33,12 @@
 </template>
 
 <script setup>
+import { computed } from "vue";
 import { useRouter } from "vue-router";
+import { authStore } from "@/store/authStore";
+
+const isTeacher = computed(() => authStore.hasRole('TEACHER').value);
+const isStudent = computed(() => authStore.hasRole('STUDENT').value);
 
 const router = useRouter();
 </script>

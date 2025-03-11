@@ -2,20 +2,20 @@
   <div class="list-container">
     <div class="header">
       <h2>Liste des Cours</h2>
-      <router-link to="/create-cours" class="create-button">Créer un Cours</router-link>
+      <router-link to="/create-cours" class="create-button" v-if="isAdmin">Créer un Cours</router-link>
     </div>
 
     <table>
       <thead>
         <tr>
           <th>Titre</th>
-          <th>Actions</th>
+          <th v-if="isAdmin">Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="course in courses" :key="course.id">
           <td data-label="Titre">{{ course.title }}</td>
-          <td data-label="Actions">
+          <td data-label="Actions" v-if="isAdmin">
             <div class="button-group">
               <router-link :to="`/edit-course/${course.id}`" class="edit-button">Modifier</router-link>
               <button class="delete-button" @click="deleteCourse(course.id)">Supprimer</button>
@@ -30,8 +30,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { authStore } from "@/store/authStore";
 
+const isAdmin = computed(() => authStore.hasRole('ADMIN').value);
 const courses = ref([]);
 
 const fetchCourses = async () => {

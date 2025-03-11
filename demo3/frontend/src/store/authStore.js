@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue';
 
 export const authStore = reactive({
     user: null,
@@ -15,6 +15,14 @@ export const authStore = reactive({
 
     initialize() {
         const user = localStorage.getItem('user');
-        if(user) this.user = JSON.parse(user);
+        if (user) {
+            this.user = JSON.parse(user);
+        }
+    },
+
+    hasRole(role) {
+        return computed(() => this.user?.role === role);
     }
 });
+
+authStore.initialize();
