@@ -55,12 +55,7 @@ L’architecture frontend est modulaire et suit les bonnes pratiques Vue.js :
 - 📁 **components/** : Regroupe les composants réutilisables.  
 - 📁 **store/** : Gestion des états avec Pinia pour synchroniser les données.  
 - 📁 **router/** : Configuration des routes avec Vue Router.  
-
-🔐 **Gestion des rôles** :  
-- Les **admins** peuvent gérer tous les utilisateurs et leurs droits.  
-- Les **professeurs** peuvent créer des examens et gérer les quiz.  
-- Les **étudiants** ont un accès restreint aux cours et examens.  
-
+ 
 ---
 
 ## 🛠 Installation et Exécution  
@@ -106,19 +101,47 @@ npm run dev
 - L’interface utilisateur sera accessible sur http://localhost:8080/h2-console.
 
 ## 📡 API Endpoints
-
-| Méthode | Endpoint         | Description |
-|---------|-----------------|-------------|
-| **POST**   | `/auth/login`     | Connexion utilisateur |
-| **GET**    | `/users`          | Récupérer tous les utilisateurs |
-| **POST**   | `/users`          | Ajouter un utilisateur |
-| **PUT**    | `/users/{id}`     | Modifier un utilisateur |
-| **DELETE** | `/users/{id}`     | Supprimer un utilisateur |
-| **GET**    | `/courses`        | Liste des cours |
-| **POST**   | `/courses`        | Ajouter un cours |
-| **GET**    | `/exams`          | Liste des examens |
-| **POST**   | `/exams`          | Ajouter un examen |
-| **POST**   | `/quiz`           | Créer un quiz |
+|------------|-----------------------------------------------------|
+| Méthode    | Endpoint                                            |
+|------------|-----------------------------------------------------|
+| **PUT**    | `/api/users/update`                                 | 
+| **POST**   | `/api/users/creat`                                  |  
+| **GET**    | `/api/users/{userId}`                               | 
+| **DELETE** | `/api/users/{userId}`                               |
+| **GET**    | `/api/users/techers`                                | 
+| **GET**    | `/api/users/students`                               |
+| **GET**    | `/api/users/role/{role}`                            |
+| **GET**    | `/api/users/all`                                    | 
+| **PUT**    | `/api/quizzes/{quizId}/assos`                       | 
+| **PUT**    | `/api/quizzes/update/{quizId}`                      | 
+| **POST**   | `/api/quizzes/create`                               | 
+| **GET**    | `/api/quizzes/{quizId}`                             | 
+| **DELETE** |`/api/quizzes/{quizId}`                              | 
+| **GET**    | `/api/quizzes/all`                                  | 
+| **GET**    | `/api/quizzes/{quizId}/remove-questions             | 
+| **PUT**    | `/api/questions/update`                             | 
+| **POST**   | `/api/questions/create`                             | 
+| **GET**    |`/api/questions/{questionId}`                        | 
+| **GET**    | `/api/questions/exam/{examId}`                      | 
+| **GET**    | `/api/questions/all`| Remove question               |
+| **DELETE** | `/api/questions/delete/{questionId}`                | 
+| **PUT**    |`/api/exams/update`                                  | 
+| **POST**   | `/api/exams/{examId}/add-student/{studentId}        | 
+| **POST**   | `/api/exams/create`                                 | 
+| **GET**    | `/api/exams/{examId}`                               | 
+| **DELET**  | `/api/exams/{examId}`                               | 
+| **GET**    |`/api/exams/teacher/{teacherId}/First`               | 
+| **GET**    | `/api/exams/teacher/{teacherId}/All`                | 
+| **GET**    | `/api/exams/all`                                    |
+| **DELETE** | `/api/exams/{examId}/remove-student/{studentId}`    | 
+| **PUT**    | `/api/courses/update`                               | 
+| **POST**   | `/api/courses/{courseId}/add-student/{studentId}    | 
+| **POST**   | `/api/courses/create`                               | 
+| **GET**    |`/api/courses/{courseId}`                            | 
+| **GET**    | `/api/courses/all`                                  | 
+| **DELETE** | `/api/courses/{courseId}/remove-student/{studentId}`|
+| **DELETE** | `/api/courses/delete/{courseId}`                    | 
+|------------|-----------------------------------------------------|
 
 > 🔐 **Note** : Certains endpoints nécessitent des autorisations spécifiques selon le rôle de l’utilisateur.
 

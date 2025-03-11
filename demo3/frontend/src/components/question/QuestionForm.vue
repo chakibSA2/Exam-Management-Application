@@ -1,42 +1,42 @@
 <template>
-    <div class="form-container">
-        <h2>Créer une Question</h2>
-        <form @submit.prevent="createQuestion">
-            <label>Examen</label>
-            <select v-model="question.examId" required>
-                <option value="" disabled>Choisir un examen</option>
-                <option v-for="exam in exams" :key="exam.id" :value="exam.id">
-                    {{ exam.title }}
-                </option>
-            </select>
+  <div class="form-container">
+    <h2>Créer une Question</h2>
+    <form @submit.prevent="createQuestion">
+      <label>Examen</label>
+      <select v-model="question.examId" required>
+        <option value="" disabled>Choisir un examen</option>
+        <option v-for="exam in exams" :key="exam.id" :value="exam.id">
+          {{ exam.title }}
+        </option>
+      </select>
 
-            <label>Catégorie</label>
-            <input v-model="question.category" type="text" required />
+      <label>Catégorie</label>
+      <input v-model="question.category" type="text" required />
 
-            <label>Niveau de difficulté</label>
-            <input v-model="question.difficultyLevel" type="text" required />
+      <label>Niveau de difficulté</label>
+      <input v-model="question.difficultyLevel" type="text" required />
 
-            <label>Option 1</label>
-            <input v-model="question.option1" type="text" required />
+      <label>Option 1</label>
+      <input v-model="question.option1" type="text" required />
 
-            <label>Option 2</label>
-            <input v-model="question.option2" type="text" required />
+      <label>Option 2</label>
+      <input v-model="question.option2" type="text" required />
 
-            <label>Option 3</label>
-            <input v-model="question.option3" type="text" required />
+      <label>Option 3</label>
+      <input v-model="question.option3" type="text" required />
 
-            <label>Option 4</label>
-            <input v-model="question.option4" type="text" required />
+      <label>Option 4</label>
+      <input v-model="question.option4" type="text" required />
 
-            <label>Titre de la question</label>
-            <input v-model="question.questionTitle" type="text" required />
+      <label>Titre de la question</label>
+      <input v-model="question.questionTitle" type="text" required />
 
-            <label>Bonne réponse</label>
-            <input v-model="question.rightAnswer" type="text" required />
+      <label>Bonne réponse</label>
+      <input v-model="question.rightAnswer" type="text" required />
 
-            <button type="submit">Ajouter</button>
-        </form>
-    </div>
+      <button type="submit">Ajouter</button>
+    </form>
+  </div>
 </template>
 
 <script setup>
@@ -44,55 +44,55 @@ import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const exams = ref([]); // Liste des examens récupérés depuis l'API
-const selectedExamId = ref(""); // Examen sélectionné
+const exams = ref([]);
+const selectedExamId = ref("");
 
 const question = ref({
-    questionTitle: "",
-    category: "",
-    difficultyLevel: "",
-    option1: "",
-    option2: "",
-    option3: "",
-    option4: "",
-    rightAnswer: "",
-    exam: {},
-    examId: ""
+  questionTitle: "",
+  category: "",
+  difficultyLevel: "",
+  option1: "",
+  option2: "",
+  option3: "",
+  option4: "",
+  rightAnswer: "",
+  exam: {},
+  examId: ""
 });
 
-// Récupération des examens depuis l'API
+
 const fetchExams = async () => {
-    try {
-        const response = await fetch("http://localhost:8080/api/exams/all");
-        if (!response.ok) throw new Error("Erreur lors de la récupération des examens.");
-        exams.value = await response.json();
-    } catch (error) {
-        console.error(error);
-    }
+  try {
+    const response = await fetch("http://localhost:8080/api/exams/all");
+    if (!response.ok) throw new Error("Erreur lors de la récupération des examens.");
+    exams.value = await response.json();
+  } catch (error) {
+    console.error(error);
+  }
 };
 
-// Création d'une question
+
 const createQuestion = async () => {
-    if (!question.value.examId) {
-        alert("Veuillez sélectionner un examen.");
-        return;
-    }
+  if (!question.value.examId) {
+    alert("Veuillez sélectionner un examen.");
+    return;
+  }
 
-    try {
-        const response = await fetch(`http://localhost:8080/api/questions/create`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(question.value),
-        });
+  try {
+    const response = await fetch(`http://localhost:8080/api/questions/create`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(question.value),
+    });
 
-        if (!response.ok) throw new Error("Erreur lors de la création de la question.");
+    if (!response.ok) throw new Error("Erreur lors de la création de la question.");
 
-        alert("Question créée avec succès !");
-        router.push(`/questions`);
-    } catch (error) {
-        console.error(error);
-        alert("Une erreur s'est produite lors de la création.");
-    }
+    alert("Question créée avec succès !");
+    router.push(`/questions`);
+  } catch (error) {
+    console.error(error);
+    alert("Une erreur s'est produite lors de la création.");
+  }
 };
 
 onMounted(fetchExams);

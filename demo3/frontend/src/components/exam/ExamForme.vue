@@ -71,7 +71,7 @@ const createExam = async () => {
   }
 
   try {
-    exam.value.date = new Date(exam.value.date).toISOString(); // Conversion au format ISO
+    exam.value.date = new Date(exam.value.date).toISOString();
     const response = await fetch("http://localhost:8080/api/exams/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

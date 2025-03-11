@@ -45,7 +45,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const questionId = route.params.questionId; // Récupération de l'ID de la question
+const questionId = route.params.questionId;
 
 const question = ref({
     title: "",
@@ -61,7 +61,7 @@ const question = ref({
 
 const exams = ref([]);
 
-// Récupération des examens depuis l'API
+
 const fetchExams = async () => {
     try {
         const response = await fetch("http://localhost:8080/api/exams/all");
@@ -72,7 +72,7 @@ const fetchExams = async () => {
     }
 };
 
-// Récupération des données de la question existante
+
 const fetchQuestionDetails = async () => {
     try {
         const response = await fetch(`http://localhost:8080/api/questions/${questionId}`);
@@ -83,7 +83,6 @@ const fetchQuestionDetails = async () => {
     }
 };
 
-// Mise à jour de la question
 const updateQuestion = async () => {
     try {
         const response = await fetch("http://localhost:8080/api/questions/update", {
@@ -106,14 +105,14 @@ const updateQuestion = async () => {
         if (!response.ok) throw new Error("Erreur lors de la mise à jour de la question.");
 
         alert("Question modifiée avec succès !");
-        router.push("/questions"); // Redirection vers la liste des questions
+        router.push("/questions");
     } catch (error) {
         console.error(error);
         alert("Une erreur s'est produite lors de la mise à jour.");
     }
 };
 
-// Chargement des données à l'affichage du composant
+
 onMounted(() => {
     fetchExams();
     fetchQuestionDetails();

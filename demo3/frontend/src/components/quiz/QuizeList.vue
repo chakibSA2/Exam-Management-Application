@@ -145,9 +145,8 @@ tr:hover td {
   transform: translateY(-1px);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
-  /* ... (styles existants) ... */
 
   .button-group {
     flex-direction: column;
@@ -167,7 +166,7 @@ p {
   font-style: italic;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .list-container {
     margin: 1rem;

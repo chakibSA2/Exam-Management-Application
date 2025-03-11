@@ -44,7 +44,6 @@ const router = useRouter();
 </script>
 
 <style scoped>
-/* Styles */
 .home-container {
   text-align: center;
   padding: 40px 20px;

@@ -48,9 +48,9 @@ const login = async () => {
     }
 
     const user = await response.json();
-    localStorage.setItem("user", JSON.stringify(user)); // 🔐 Stocke l'utilisateur connecté
+    localStorage.setItem("user", JSON.stringify(user));
 
-    router.push("/home"); // ✅ Redirige vers la page principale
+    router.push("/home");
   } catch (error) {
     errorMessage.value = "Impossible de se connecter au serveur.";
   }

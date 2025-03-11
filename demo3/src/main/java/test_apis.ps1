@@ -1,11 +1,10 @@
-# Configuration
 $baseUrl = "http://localhost:8080/api"
 $outputFile = "api_test_results.json"
 $headers = @{
     "Content-Type" = "application/json"
 }
 
-# Liste des endpoints avec des données valides adaptées au modèle
+
 $endpoints = @(
 # Users
     @{ name="CreateTeacher"; method="POST"; url="/users/create"; data='{"username":"jdoe","firstName":"John","lastName":"Doe","email":"john.doe@example.com","password":"1234","role":"TEACHER","active":true}' },
@@ -28,10 +27,10 @@ $endpoints = @(
     @{ name="GetAllQuizzes"; method="GET"; url="/quizzes/all"; data=$null }
 )
 
-# Tableau pour stocker les résultats
+
 $results = @()
 
-# Fonction pour afficher les logs en couleur
+
 function Log-Info {
     param ([string]$message)
     Write-Host "[INFO] $message" -ForegroundColor Cyan
@@ -47,7 +46,7 @@ function Log-Error {
     Write-Host "[ERROR] $message" -ForegroundColor Red
 }
 
-# Fonction de test API
+
 function Test-Api {
     param (
         [string]$name,
@@ -59,7 +58,7 @@ function Test-Api {
     $fullUrl = "$baseUrl$url"
     Log-Info "Testing $name ($method $fullUrl)..."
 
-    # Vérification et préparation du body
+
     $body = $null
     if ($data -ne $null -and $data -ne "") {
         $body = $data
@@ -81,7 +80,7 @@ function Test-Api {
         $status = "Failed"
     }
 
-    # Stocker les résultats
+
     $results += @{
         "name" = $name
         "method" = $method
@@ -91,11 +90,11 @@ function Test-Api {
     }
 }
 
-# Exécution des tests API
+
 foreach ($endpoint in $endpoints) {
     Test-Api -name $endpoint.name -method $endpoint.method -url $endpoint.url -data $endpoint.data
 }
 
-# Sauvegarde des résultats
+
 $results | ConvertTo-Json -Depth 10 | Out-File -Encoding utf8 $outputFile
 Write-Host "[INFO] Résultats sauvegardés dans $outputFile" -ForegroundColor Cyan

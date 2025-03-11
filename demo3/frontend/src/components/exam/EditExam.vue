@@ -35,7 +35,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const examId = route.params.examId; // Récupération de l'ID de l'examen dans l'URL
+const examId = route.params.examId;
 
 const exam = ref({
     title: "",
@@ -47,7 +47,7 @@ const exam = ref({
 const teachers = ref([]);
 const courses = ref([]);
 
-// Récupération des enseignants
+
 const fetchTeachers = async () => {
     try {
         const response = await fetch("http://localhost:8080/api/users/teachers");
@@ -58,7 +58,7 @@ const fetchTeachers = async () => {
     }
 };
 
-// Récupération des cours
+
 const fetchCourses = async () => {
     try {
         const response = await fetch("http://localhost:8080/api/courses/all");
@@ -69,24 +69,24 @@ const fetchCourses = async () => {
     }
 };
 
-// Récupération des données de l'examen existant
+
 const fetchExamDetails = async () => {
     try {
         const response = await fetch(`http://localhost:8080/api/exams/${examId}`);
         if (!response.ok) throw new Error("Erreur lors de la récupération de l'examen.");
         exam.value = await response.json();
 
-        // Formatage de la date pour l'affichage correct dans l'input `datetime-local`
+
         exam.value.date = new Date(exam.value.date).toISOString().slice(0, 16);
     } catch (error) {
         console.error(error);
     }
 };
 
-// Mise à jour de l'examen
+
 const updateExam = async () => {
     try {
-        exam.value.date = new Date(exam.value.date).toISOString(); // Conversion au format ISO
+        exam.value.date = new Date(exam.value.date).toISOString();
 
         const response = await fetch("http://localhost:8080/api/exams/update", {
             method: "PUT",
@@ -103,14 +103,14 @@ const updateExam = async () => {
         if (!response.ok) throw new Error("Erreur lors de la mise à jour de l'examen.");
 
         alert("Examen modifié avec succès !");
-        router.push("/exams"); // Redirection vers la liste des examens
+        router.push("/exams");
     } catch (error) {
         console.error(error);
         alert("Une erreur s'est produite lors de la mise à jour.");
     }
 };
 
-// Chargement des données à l'affichage du composant
+
 onMounted(() => {
     fetchTeachers();
     fetchCourses();

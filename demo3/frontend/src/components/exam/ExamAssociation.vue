@@ -10,8 +10,7 @@
           </option>
         </select>
         <div class="button-group">
-          <button v-if="selections.length > 1" @click="removeSelection(index)" type="button"
-                  class="remove-btn">
+          <button v-if="selections.length > 1" @click="removeSelection(index)" type="button" class="remove-btn">
             -
           </button>
           <button @click="addSelection" type="button" class="add-btn">
@@ -41,13 +40,13 @@ const examId = route.params.examId;
 const allStudents = ref([]);
 const selections = ref([{ id: null }]);
 
-// Récupère les étudiants existantes
+
 onMounted(async () => {
   const response = await fetch('http://localhost:8080/api/users/students');
   allStudents.value = await response.json();
 });
 
-// Etudiants disponibles non sélectionnées
+
 const availableStudents = computed(() => {
   const selectedIds = selections.value.map(s => s.id);
   return allStudents.value.filter(stu => !selectedIds.includes(stu.userId));
@@ -63,8 +62,8 @@ const removeSelection = (index) => {
 
 const associateStudents = async () => {
   const studentId = selections.value
-      .map(s => s.id)
-      .filter(id => id !== null);
+    .map(s => s.id)
+    .filter(id => id !== null);
 
   try {
     await fetch(`http://localhost:8080/api/exams/${examId}/add-student/${studentId}`, {
@@ -81,8 +80,8 @@ const associateStudents = async () => {
 
 const removeStudents = async () => {
   const questionIds = selections.value
-      .map(s => s.id)
-      .filter(id => id !== null);
+    .map(s => s.id)
+    .filter(id => id !== null);
 
   try {
     await fetch(`http://localhost:8080/api/exams/${examId}/remove-student/${studentId}`, {

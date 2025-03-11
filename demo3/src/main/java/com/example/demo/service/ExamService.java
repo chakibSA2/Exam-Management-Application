@@ -27,21 +27,19 @@ public class ExamService {
     private UserRepository userRepository;
 
     public Exam addExam(Exam exam) {
-        //  Vérifier si le professeur existe
+
         Optional<Users> teacherOpt = userRepository.findById(exam.getTeacherId());
         if (teacherOpt.isEmpty()) {
             throw new EntityNotFoundException("Professeur introuvable avec ID : " + exam.getTeacherId());
         }
         exam.setTeacher(teacherOpt.get());
 
-        // Vérifier si le cours existe
         Optional<Course> courseOpt = courseRepository.findById(exam.getCourseId());
         if (courseOpt.isEmpty()) {
             throw new EntityNotFoundException("Cours introuvable avec ID : " + exam.getCourseId());
         }
         exam.setCourse(courseOpt.get());
 
-        //  Sauvegarde de l'examen avec le professeur et le cours associés
         return examRepository.save(exam);
     }
 
@@ -57,13 +55,11 @@ public class ExamService {
         existingExam.setTitle(exam.getTitle());
         existingExam.setDate(exam.getDate());
 
-        //  Mise à jour du professeur
         Optional<Users> teacherOpt = userRepository.findById(exam.getTeacherId());
         if (teacherOpt.isPresent()) {
             existingExam.setTeacher(teacherOpt.get());
         }
 
-        //  Mise à jour du cours
         Optional<Course> courseOpt = courseRepository.findById(exam.getCourseId());
         if (courseOpt.isPresent()) {
             existingExam.setCourse(courseOpt.get());

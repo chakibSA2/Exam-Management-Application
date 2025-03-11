@@ -16,13 +16,13 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const courseId = route.params.courseId; // Récupération de l'ID du cours dans l'URL
+const courseId = route.params.courseId;
 
 const course = ref({
     title: "",
 });
 
-// Récupérer les informations du cours sélectionné
+
 const fetchCourseDetails = async () => {
     try {
         const response = await fetch(`http://localhost:8080/api/courses/${courseId}`);
@@ -33,19 +33,19 @@ const fetchCourseDetails = async () => {
     }
 };
 
-// Mettre à jour le cours
+
 const updateCourse = async () => {
     try {
         const response = await fetch(`http://localhost:8080/api/courses/update`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ id: courseId, title: course.value.title }), // Envoi de l'ID et du titre modifié
+            body: JSON.stringify({ id: courseId, title: course.value.title }),
         });
 
         if (!response.ok) throw new Error("Erreur lors de la mise à jour du cours.");
 
         alert("Cours modifié avec succès !");
-        router.push("/cours"); // Redirection vers la liste des cours
+        router.push("/cours");
     } catch (error) {
         console.error(error);
         alert("Une erreur s'est produite lors de la mise à jour.");

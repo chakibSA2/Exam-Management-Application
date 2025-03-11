@@ -38,7 +38,7 @@ import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
 const route = useRoute();
-const userId = route.params.userId; // Récupération de l'ID de l'utilisateur depuis l'URL
+const userId = route.params.userId;
 
 const user = ref({
     username: "",
@@ -49,7 +49,7 @@ const user = ref({
     active: true,
 });
 
-// Récupération des informations de l'utilisateur existant
+
 const fetchUserDetails = async () => {
     try {
         const response = await fetch(`http://localhost:8080/api/users/${userId}`);
@@ -60,7 +60,7 @@ const fetchUserDetails = async () => {
     }
 };
 
-// Mise à jour de l'utilisateur
+
 const updateUser = async () => {
     try {
         const response = await fetch("http://localhost:8080/api/users/update", {
@@ -72,14 +72,14 @@ const updateUser = async () => {
         if (!response.ok) throw new Error("Erreur lors de la mise à jour de l'utilisateur.");
 
         alert("Utilisateur modifié avec succès !");
-        router.push("/users"); // Redirection vers la liste des utilisateurs
+        router.push("/users");
     } catch (error) {
         console.error(error);
         alert("Une erreur s'est produite lors de la mise à jour.");
     }
 };
 
-// Chargement des données au montage du composant
+
 onMounted(fetchUserDetails);
 </script>
 

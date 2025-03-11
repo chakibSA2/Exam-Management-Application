@@ -41,13 +41,13 @@ const quizId = route.params.quizId;
 const allQuestions = ref([]);
 const selections = ref([{ id: null }]);
 
-// Récupère les questions existantes
+
 onMounted(async () => {
     const response = await fetch('http://localhost:8080/api/questions/all');
     allQuestions.value = await response.json();
 });
 
-// Questions disponibles non sélectionnées
+
 const availableQuestions = computed(() => {
     const selectedIds = selections.value.map(s => s.id);
     return allQuestions.value.filter(q => !selectedIds.includes(q.id));

@@ -30,27 +30,27 @@ const routes = [
 
     { path: "/home", component: HomeView, meta: { requiresAuth: true } },
 
-    // Gestion des utilisateurs
+
     { path: "/users", component: UsersView, meta: { requiresAuth: true } },
     { path: "/create-user", component: UserForm, meta: { requiresAuth: true } },
     { path: "/edit-user/:userId", component: EditUser, props: true, meta: { requiresAuth: true } },
 
-    // Gestion des examens
+
     { path: "/exams", component: ExamListe, meta: { requiresAuth: true } },
     { path: "/create-exam", component: ExamForme, meta: { requiresAuth: true } },
     { path: "/edit-exam/:examId", component: EditExam, props: true, meta: { requiresAuth: true } },
 
-    // Gestion des cours
+
     { path: "/cours", component: CoursView, meta: { requiresAuth: true } },
     { path: "/create-cours", component: CoursForme, meta: { requiresAuth: true } },
     { path: "/edit-course/:courseId", component: EditCours, props: true, meta: { requiresAuth: true } },
 
-    // Gestion des questions
+
     { path: "/questions", component: QuestionView, meta: { requiresAuth: true } },
     { path: "/create-question", component: QuestionForm, meta: { requiresAuth: true } },
     { path: "/edit-question/:questionId", component: EditQuestion, props: true, meta: { requiresAuth: true } },
 
-    // Gestion des quiz
+
     { path: "/quizes", component: QuizView, meta: { requiresAuth: true } },
     { path: "/create-quiz", component: QuizForme, meta: { requiresAuth: true } },
     { path: "/edit-quiz/:quizId", component: EditQuiz, props: true, meta: { requiresAuth: true } },
@@ -62,12 +62,12 @@ const router = createRouter({
     routes,
 });
 
-// 🚀 Middleware pour protéger les routes nécessitant une authentification
+
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = localStorage.getItem("user"); // Vérifier si un utilisateur est connecté
+    const isAuthenticated = localStorage.getItem("user");
 
     if (to.meta.requiresAuth && !isAuthenticated) {
-        next("/"); // Rediriger vers la page de connexion si pas connecté
+        next("/");
     } else {
         next();
     }
